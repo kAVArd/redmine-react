@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Login from './components/Login'
 import Projects from './components/Projects'
 import Tracker from './components/Tracker'
@@ -7,7 +7,12 @@ import Comments from './components/Comments'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 function App () {
-  const isLogin = true
+  const [isLogin, setIsLogin] = useState(false)
+
+  const login = (e) => {
+    e.preventDefault()
+    setIsLogin(true)
+  }
 
   if (isLogin) {
     return (
@@ -18,10 +23,10 @@ function App () {
             <div className='collpase nav-collapse'>
               <ul className='navbar-nav'>
                 <li className='nav-item'>
-                  <Link to='/projects' className='nav-link'>Projects</Link>
+                  <Link to='/' className='nav-link'>Projects</Link>
                 </li>
                 <li className='nav-item'>
-                  <Link to='/create' className='nav-link'>Tracker</Link>
+                  <Link to='/tracker' className='nav-link'>Tracker</Link>
                 </li>
                 <li className='nav-item'>
                   <Link to='/comments' className='nav-link'>Comments</Link>
@@ -42,7 +47,7 @@ function App () {
   }
 
   return (
-    <Login />
+    <Login login={login} />
   )
 }
 
