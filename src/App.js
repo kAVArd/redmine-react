@@ -7,7 +7,7 @@ import Comments from './components/Comments'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 function App () {
-  const isLogin = false
+  const isLogin = true
 
   if (isLogin) {
     return (

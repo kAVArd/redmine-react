@@ -2,7 +2,9 @@ import React from 'react'
 
 const Tracker = () => {
   return (
-    <div>    
+    <div className='container'>
+      <h4><b>Tracker</b></h4>
+      <hr />
     </div>
   )
 }
