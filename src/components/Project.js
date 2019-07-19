@@ -1,8 +1,13 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 
-const Project = ({ project }) => {
+const Project = ({ project, history }) => {
+  const goToIssues = () => {
+    history.push(`/project/${project.id}/issues`)
+  }
+
   return (
-    <tr>
+    <tr onClick={goToIssues}>
       <td>{project.id}</td>
       <td>{project.name}</td>
       <td>{project.description}</td>
@@ -12,4 +17,4 @@ const Project = ({ project }) => {
   )
 }
 
-export default Project
+export default withRouter(Project)

@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { getProjects } from '../_service'
 import Project from './Project'
 
-const Projects = () => {
+const ProjectList = () => {
   const [projects, setProjects] = useState([])
   const [isFetching, setIsFetching] = useState(true)
+
   useEffect(() => {
     getProjects().then(projects => {
       setProjects(projects)
@@ -36,14 +37,13 @@ const Projects = () => {
           </tr>
         </thead>
         <tbody>
-          {projects.map((project) => {
-            console.log(project)
-            return <Project project={project} key={project.id} />
-          })}
+          {projects.map((project) =>
+            <Project project={project} key={project.id} />
+          )}
         </tbody>
       </table>
     </div>
   )
 }
 
-export default Projects
+export default ProjectList
