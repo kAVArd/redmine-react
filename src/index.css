@@ -6,6 +6,14 @@
   margin-bottom: 0;
 }
 
-h4 {
+h3 {
   margin-top: 20px;
+}
+
+.spinners {
+  margin-top: 20%;
+}
+
+.logout {
+  float: right;
 }

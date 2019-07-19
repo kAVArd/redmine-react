@@ -3,7 +3,7 @@ import React from 'react'
 const Comments = () => {
   return (
     <div className='container'>
-      <h4><b>Comments</b></h4>
+      <h3>Comments</h3>
       <hr />
     </div>
   )

@@ -7,11 +7,11 @@ import Comments from './components/Comments'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 function App () {
-  const [isLogin, setIsLogin] = useState(false)
+  const [isLogin, setIsLogin] = useState(true)
 
   const login = (e) => {
     e.preventDefault()
-    setIsLogin(true)
+    setIsLogin(!isLogin)
   }
 
   if (isLogin) {
@@ -33,6 +33,13 @@ function App () {
                 </li>
                 <li className='nav-item'>
                   <Link to='/about' className='nav-link'>About</Link>
+                </li>
+              </ul>
+            </div>
+            <div className='navbar-collapse collapse w-100 order-3 dual-collapse2'>
+              <ul className='navbar-nav ml-auto'>
+                <li className='nav-item'>
+                  <a className='nav-link' href='/' onClick={login}>Log out</a>
                 </li>
               </ul>
             </div>
