@@ -28,7 +28,7 @@ export const getProjectIssues = (projectId) => {
   // eslint-disable-next-line
   return fetch(`${process.env.REACT_APP_URL}/issues.json?project_id=${projectId}&limit=25`, requestOptions)
     .then(res => res.json())
-    .then(resObj => console.log(resObj))
+    .then(resObj => resObj.issues)
     .catch(e => console.log(e))
 }
 
