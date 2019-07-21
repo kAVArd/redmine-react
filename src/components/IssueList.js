@@ -9,10 +9,23 @@ const IssueList = (props) => {
 
   useEffect(() => {
     getProject(id).then(project => setProject(project))
-    getProjectIssues(id).then(issues => setIssues(issues))
+    getProjectIssues(id).then(issues => {
+      if (issues.message) setIssues(false)
+      else setIssues(issues)
+    })
   }, [id])
 
-  if (project === null || issues.length === 0) {
+  if (!issues && project) {
+    return (
+      <div className='container'>
+        <div className='row justify-content-center'>
+          <h3>No issues for <b>{project.name}</b></h3>
+        </div>
+      </div>
+    )
+  }
+
+  if (!project || issues.length === 0) {
     return (
       <div className='text-center spinners'>
         <div className='spinner-grow text-muted' />
@@ -24,12 +37,12 @@ const IssueList = (props) => {
 
   return (
     <div className='container'>
-      <h3>Issues of {project.name}</h3>
+      <h3>Issues of <b>{project.name}</b></h3>
       <table className='table table-hover'>
         <thead>
           <tr>
             <th>#</th>
-            <th>Project</th>
+            <th>Tracker</th>
             <th>Status</th>
             <th>Priority</th>
             <th>Subject</th>
@@ -38,10 +51,10 @@ const IssueList = (props) => {
           </tr>
         </thead>
         <tbody>
+          {console.log(issues)}
           {issues.map(issue => (
             <Issue key={issue.id} issue={issue} />
           ))}
-          {console.log(issues)}
         </tbody>
       </table>
     </div>

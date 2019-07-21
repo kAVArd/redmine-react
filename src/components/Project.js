@@ -1,18 +1,15 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
+import { formatDate } from '../_helper'
 
 const Project = ({ project, history }) => {
-  const goToIssues = () => {
-    history.push(`/project/${project.id}/issues`)
-  }
-
   return (
-    <tr onClick={goToIssues}>
+    <tr onClick={() => { history.push(`/project/${project.id}/issues`) }}>
       <td>{project.id}</td>
       <td>{project.name}</td>
       <td>{project.description}</td>
-      <td>{new Date(Date.parse(project.created_on)).toDateString()}</td>
-      <td>{new Date(Date.parse(project.updated_on)).toDateString()}</td>
+      <td>{formatDate(project.created_on)}</td>
+      <td>{formatDate(project.updated_on)}</td>
     </tr>
   )
 }
