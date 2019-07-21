@@ -49,7 +49,7 @@ function App () {
           <Route exact path='/tracker' component={Tracker} />
           <Route exact path='/comments' component={Comments} />
           <Route exact path='/about' component={About} />
-          <Route exact path='/project/:id/issues' component={IssueList} />
+          <Route exact path='/project/:id/issues/:offset' component={IssueList} />
         </div>
       </Router>
     )

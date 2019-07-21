@@ -15,12 +15,12 @@ export const getProjects = () => {
     .catch(e => e)
 }
 
-export const getProjectIssues = (projectId) => {
+export const getProjectIssues = (projectId, offset) => {
   requestOptions.method = 'get'
   // eslint-disable-next-line
-  return fetch(`${process.env.REACT_APP_URL}/issues.json?project_id=${projectId}&limit=25`, requestOptions)
+  return fetch(`${process.env.REACT_APP_URL}/issues.json?project_id=${projectId}&limit=25&offset=${offset}`, requestOptions)
     .then(res => res.json())
-    .then(resObj => resObj.issues)
+    .then(resObj => resObj)
     .catch(e => e)
 }
 

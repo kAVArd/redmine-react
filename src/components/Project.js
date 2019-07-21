@@ -4,7 +4,7 @@ import { formatDate } from '../_helper'
 
 const Project = ({ project, history }) => {
   return (
-    <tr onClick={() => { history.push(`/project/${project.id}/issues`) }}>
+    <tr onClick={() => { history.push(`/project/${project.id}/issues/0`) }}>
       <td>{project.id}</td>
       <td>{project.name}</td>
       <td>{project.description}</td>
