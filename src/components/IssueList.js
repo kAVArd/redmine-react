@@ -3,7 +3,7 @@ import { getProject, getProjectIssues } from '../_service'
 import Issue from './Issue'
 
 const IssueList = (props) => {
-  const [offset] = useState(props.match.params.offset)
+  const [offset, setOffset] = useState(0)
   const [projectId] = useState(props.match.params.id)
   const [project, setProject] = useState(null)
   const [issues, setIssues] = useState([])
@@ -44,11 +44,23 @@ const IssueList = (props) => {
     <div className='container'>
       <h3>Issues of <b>{project.name}</b></h3>
       <ul className='pagination'>
-        <li className={offset === 0 ? 'page-item disabled' : 'page-item'}><a className='page-link' href='#'>Previous</a></li>
-        <li className='page-item'><a className='page-link' href={`/project/${projectId}/issues/25`}>1</a></li>
-        <li className='page-item'><a className='page-link' href='#'>2</a></li>
-        <li className='page-item'><a className='page-link' href='#'>3</a></li>
-        <li className='page-item'><a className='page-link' href='#'>Next</a></li>
+        <li className={offset === 0 ? 'page-item disabled' : 'page-item'}>
+          <input type='button' className='page-link' value='Previous' onClick={() => setOffset(offset => offset - 25)} />
+        </li>
+        {(() => {
+          const pagesCount = Math.round(totalCount / 25) + 1
+          const pages = []
+          for (let i = 0; i < pagesCount; i++) {
+            pages.push(
+              <li key={i} className={offset === i * 25 ? 'page-item active' : 'page-item'}>
+                <input type='button' className='page-link' value={i + 1} onClick={() => setOffset(i * 25)} />
+              </li>
+            )
+          }
+
+          return pages
+        })()}
+        <li className={totalCount - offset < 25 ? 'page-item disabled' : 'page-item'}><input type='button' className='page-link' value='Next' onClick={() => setOffset(offset => offset + 25)} /></li>
       </ul>
       <table className='table table-hover'>
         <thead>
