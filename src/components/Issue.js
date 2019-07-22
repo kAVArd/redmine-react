@@ -1,18 +1,19 @@
 import React from 'react'
-import { formatDate } from '../_helper'
+import { formatDateTime } from '../_helper'
+import { withRouter } from 'react-router-dom'
 
-const Issue = ({ issue }) => {
+const Issue = ({ issue, history }) => {
   return (
-    <tr>
+    <tr onClick={() => history.push(`/issues/${issue.id}`)}>
       <td>{issue.id}</td>
       <td>{issue.tracker.name}</td>
       <td>{issue.status.name}</td>
       <td>{issue.priority.name}</td>
       <td>{issue.subject}</td>
       <td>{issue.author.name}</td>
-      <td>{formatDate(issue.updated_on)}</td>
+      <td>{formatDateTime(issue.updated_on)}</td>
     </tr>
   )
 }
 
-export default Issue
+export default withRouter(Issue)

@@ -29,7 +29,6 @@ const ProjectList = () => {
       <table className='table table-hover'>
         <thead>
           <tr>
-            <th>id</th>
             <th>Name</th>
             <th>Description</th>
             <th>Last update</th>

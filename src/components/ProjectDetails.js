@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Suspense } from 'react'
 import { getProject } from '../_service'
-import { formatDate } from '../_helper'
+import { formatDateTime } from '../_helper'
 const IssueList = React.lazy(() => import('./IssueList'))
 
 const ProjectDetails = (props) => {
@@ -26,8 +26,9 @@ const ProjectDetails = (props) => {
       <h3><b>{project.name}</b></h3>
       <hr />
       {console.dir(project)}
-      <h5><b>Created:</b> {formatDate(project.created_on)}</h5>
-      <h5><b>Updated:</b> {formatDate(project.created_on)}</h5>
+      <h6><b>Created:</b> {formatDateTime(project.created_on)}</h6>
+      <h6><b>Description:</b> {project.description}</h6>
+      <h6><b>Updated:</b> {formatDateTime(project.created_on)}</h6>
       <hr />
       <Suspense fallback={
         <div className='text-center spinners'>

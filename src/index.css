@@ -22,6 +22,36 @@ h3 {
   margin-left: 10px;
 }
 
-h4{
+#issues{
   text-align: center;
+}
+
+.tracker-label {
+  float: left;
+  margin-top: 4px;
+  text-align: right;
+  margin-right: 5px;
+  font-weight: bold;
+  width: 15%;
+}
+
+.tracker-input {
+  width: 30%;
+  height: 60%;
+}
+
+.required {
+  color: red;
+}
+
+.comment {
+  width: 50%;
+}
+
+#overtime {
+  margin-top: 10px;
+}
+
+#tracker-submit {
+  margin-left: 20px;
 }

@@ -6,6 +6,7 @@ const IssueList = ({ projectId, projectName }) => {
   const [offset, setOffset] = useState(0)
   const [issues, setIssues] = useState([])
   const [totalCount, setTotalCount] = useState(null)
+  const [isFetched, setIsFetched] = useState(false)
 
   useEffect(() => {
     getProjectIssues(projectId, offset).then(res => {
@@ -13,6 +14,7 @@ const IssueList = ({ projectId, projectName }) => {
       else {
         setIssues(res.issues)
         setTotalCount(res.total_count)
+        setIsFetched(true)
       }
     })
   }, [offset, projectId])
@@ -27,39 +29,42 @@ const IssueList = ({ projectId, projectName }) => {
     )
   }
 
-  if (issues.length === 0) {
-    return (
-      <div className='text-center spinners'>
-        <div className='spinner-grow text-muted' />
-        <div className='spinner-grow text-muted' />
-        <div className='spinner-grow text-muted' />
-      </div>
-    )
-  }
   return (
     <div>
-      <h4><b>Issues</b></h4>
+      <h4 id='issues'><b>Issues</b></h4>
       <ul className='pagination'>
         <li className={offset === 0 ? 'page-item disabled' : 'page-item'}>
-          <input type='button' className='page-link' value='Previous' onClick={() => setOffset(offset => offset - 25)} />
+          <input type='button' className='page-link' value='Previous' onClick={() => {
+            setOffset(offset => offset - 25)
+            setIsFetched(false)
+          }} />
         </li>
         {(() => {
           const pages = []
           for (let i = 0; i < Math.floor(totalCount / 25) + 1; i++) {
             pages.push(
               <li key={i} className={offset === i * 25 ? 'page-item active' : 'page-item'}>
-                <input type='button' className='page-link' value={i + 1} onClick={() => setOffset(i * 25)} />
+                <input type='button' className='page-link' value={i + 1} onClick={() => {
+                  setOffset(i * 25)
+                  setIsFetched(false)
+                }} />
               </li>
             )
           }
-
           return pages
         })()}
         <li className={totalCount - offset < 25 ? 'page-item disabled' : 'page-item'}>
-          <input type='button' className='page-link' value='Next' onClick={() => setOffset(offset => offset + 25)} />
+          <input type='button' className='page-link' value='Next' onClick={() => {
+            setOffset(offset => offset + 25)
+            setIsFetched(false)
+          }} />
         </li>
       </ul>
-      <table className='table table-hover'>
+      {!isFetched ? <div className='text-center spinners'>
+        <div className='spinner-grow text-muted' />
+        <div className='spinner-grow text-muted' />
+        <div className='spinner-grow text-muted' />
+      </div> : <table className='table table-hover'>
         <thead>
           <tr>
             <th>#</th>
@@ -76,7 +81,7 @@ const IssueList = ({ projectId, projectName }) => {
             <Issue key={issue.id} issue={issue} />
           ))}
         </tbody>
-      </table>
+      </table>}
     </div>
   )
 }
