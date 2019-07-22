@@ -32,7 +32,6 @@ const ProjectList = () => {
             <th>id</th>
             <th>Name</th>
             <th>Description</th>
-            <th>Created</th>
             <th>Last update</th>
           </tr>
         </thead>

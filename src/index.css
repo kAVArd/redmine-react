@@ -17,3 +17,11 @@ h3 {
 .logout {
   float: right;
 }
+
+.details {
+  margin-left: 10px;
+}
+
+h4{
+  text-align: center;
+}

@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { getProject, getProjectIssues } from '../_service'
 import Issue from './Issue'
+import { getProjectIssues } from '../_service'
 
-const IssueList = (props) => {
+const IssueList = ({ projectId, projectName }) => {
   const [offset, setOffset] = useState(0)
-  const [projectId] = useState(props.match.params.id)
-  const [project, setProject] = useState(null)
   const [issues, setIssues] = useState([])
   const [totalCount, setTotalCount] = useState(null)
 
   useEffect(() => {
-    getProject(projectId).then(project => setProject(project))
     getProjectIssues(projectId, offset).then(res => {
       if (res.message) setIssues(false)
       else {
@@ -18,19 +15,19 @@ const IssueList = (props) => {
         setTotalCount(res.total_count)
       }
     })
-  }, [projectId, offset])
+  }, [offset, projectId])
 
-  if (!issues && project) {
+  if (!issues) {
     return (
       <div className='container'>
         <div className='row justify-content-center'>
-          <h3>No issues for <b>{project.name}</b></h3>
+          <h3>No issues for <b>{projectName}</b></h3>
         </div>
       </div>
     )
   }
 
-  if (!project || issues.length === 0) {
+  if (issues.length === 0) {
     return (
       <div className='text-center spinners'>
         <div className='spinner-grow text-muted' />
@@ -39,18 +36,16 @@ const IssueList = (props) => {
       </div>
     )
   }
-
   return (
-    <div className='container'>
-      <h3>Issues of <b>{project.name}</b></h3>
+    <div>
+      <h4><b>Issues</b></h4>
       <ul className='pagination'>
         <li className={offset === 0 ? 'page-item disabled' : 'page-item'}>
           <input type='button' className='page-link' value='Previous' onClick={() => setOffset(offset => offset - 25)} />
         </li>
         {(() => {
-          const pagesCount = Math.round(totalCount / 25) + 1
           const pages = []
-          for (let i = 0; i < pagesCount; i++) {
+          for (let i = 0; i < Math.floor(totalCount / 25) + 1; i++) {
             pages.push(
               <li key={i} className={offset === i * 25 ? 'page-item active' : 'page-item'}>
                 <input type='button' className='page-link' value={i + 1} onClick={() => setOffset(i * 25)} />
@@ -60,7 +55,9 @@ const IssueList = (props) => {
 
           return pages
         })()}
-        <li className={totalCount - offset < 25 ? 'page-item disabled' : 'page-item'}><input type='button' className='page-link' value='Next' onClick={() => setOffset(offset => offset + 25)} /></li>
+        <li className={totalCount - offset < 25 ? 'page-item disabled' : 'page-item'}>
+          <input type='button' className='page-link' value='Next' onClick={() => setOffset(offset => offset + 25)} />
+        </li>
       </ul>
       <table className='table table-hover'>
         <thead>

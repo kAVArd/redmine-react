@@ -5,7 +5,7 @@ import Tracker from './components/Tracker'
 import About from './components/About'
 import Comments from './components/Comments'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import IssueList from './components/IssueList'
+import ProjectDetails from './components/ProjectDetails'
 
 function App () {
   const [isLogin, setIsLogin] = useState(true)
@@ -49,7 +49,7 @@ function App () {
           <Route exact path='/tracker' component={Tracker} />
           <Route exact path='/comments' component={Comments} />
           <Route exact path='/about' component={About} />
-          <Route exact path='/project/:id/issues' component={IssueList} />
+          <Route exact path='/project/:id' component={ProjectDetails} />
         </div>
       </Router>
     )
