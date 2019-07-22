@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { formatDate } from '../_helper'
-import { postTracker } from '../_service'
 
-const SpentTimeForm = ({ issue }) => {
+const SpentTimeForm = ({ issue, handlePosting }) => {
   const [date, setDate] = useState(formatDate(Date.now()))
   const [hours, setHours] = useState(undefined)
   const [comment, setComment] = useState('')
@@ -22,7 +21,7 @@ const SpentTimeForm = ({ issue }) => {
         <h4>Spent time</h4>
         <form onSubmit={(e) => {
           e.preventDefault()
-          postTracker(issue.id, date, hours, comment, activityId)
+          handlePosting(date, hours, comment, activityId)
         }}>
           <div className='form-group'>
             <label htmlFor='date' className='tracker-label'>Date<span className='required'>*</span></label>
@@ -32,7 +31,6 @@ const SpentTimeForm = ({ issue }) => {
             <label htmlFor='hours' className='tracker-label'>Hours<span className='required'>*</span></label>
             <input type='number' className='form-control tracker-input' id='hours' onChange={e => setHours(e.target.value)} />
           </div>
-          {console.log(hours)}
           <div className='form-group'>
             <label htmlFor='comment' className='tracker-label'>Comment</label>
             <input type='text' className='form-control comment' id='comment' onChange={e => setComment(e.target.value)} />

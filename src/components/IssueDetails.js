@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getIssue } from '../_service'
+import { getIssue, postTracker } from '../_service'
 import { formatDateTime } from '../_helper'
 import SpentTimeForm from './SpentTimeForm'
 
@@ -20,6 +20,18 @@ const IssueDetails = (props) => {
       </div>
     )
   }
+
+  const handlePosting = (date, hours, comment, activityId) => {
+    postTracker(issueId, date, hours, comment, activityId).then(res => {
+      if (res.time_entry) {
+        getIssue(issueId).then(issue => {
+          console.log(issue)
+          setIssue(issue)
+        })
+      }
+    })
+  }
+
   return (
     <div className='container'>
       {console.log(issue)}
@@ -42,7 +54,7 @@ const IssueDetails = (props) => {
         </div>
       </div>
       <hr />
-      <SpentTimeForm issue={issue} />
+      <SpentTimeForm issue={issue} handlePosting={handlePosting} />
     </div>
   )
 }
