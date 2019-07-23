@@ -33,7 +33,7 @@ const ProjectDetails = (props) => {
           <h6><b>Updated:</b> {formatDateTime(project.created_on)}</h6>
         </div>
         <div className='col-8 justify-content-center'>
-          <Comments />
+          <Comments projectId={projectId}/>
         </div>
       </div>
       <hr />

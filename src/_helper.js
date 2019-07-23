@@ -16,15 +16,23 @@ export const formatDate = (d) => {
   return dateParse.getFullYear() + '-' + month + '-' + date
 }
 
-export const addComment = (username, commentText) => {
-  if (!localStorage.getItem('comments')) localStorage.setItem('comments', JSON.stringify([]))
+export const addComment = (username, commentText, projectId) => {
+  if (!localStorage.getItem('comments')) localStorage.setItem('comments', JSON.stringify({}))
   const comments = JSON.parse(localStorage.getItem('comments'))
+  if (!comments[projectId]) comments[projectId] = []
   const newComment = {
     username: username,
     commentText: commentText,
     date: formatDateTime(Date.now())
   }
-  comments.push(newComment)
+  comments[projectId].push(newComment)
   localStorage.setItem('comments', JSON.stringify(comments))
   return newComment
+}
+
+export const getProjectComments = (projectId) => {
+  if (!localStorage.getItem('comments')) localStorage.setItem('comments', JSON.stringify({}))
+  const comments = JSON.parse(localStorage.getItem('comments'))
+  if (!comments[projectId]) comments[projectId] = []
+  return comments[projectId]
 }

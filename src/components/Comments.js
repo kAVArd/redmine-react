@@ -1,18 +1,20 @@
 import React, { useState } from 'react'
-import { addComment } from '../_helper'
+import { addComment, getProjectComments } from '../_helper'
 
-const Comments = () => {
+const Comments = ({ projectId }) => {
   const [commentText, setCommentText] = useState('')
   const [username, setUsername] = useState('')
-  const [comments, setComments] = useState(!localStorage.getItem('comments') ? [] : JSON.parse(localStorage.getItem('comments')))
+  const [comments, setComments] = useState(getProjectComments(projectId))
+  console.log(localStorage)
 
   const handleCreateComment = () => {
     setComments([
       ...comments,
-      addComment(username, commentText)
+      addComment(username, commentText, projectId)
     ])
     setCommentText('')
     setUsername('')
+    console.log(localStorage)
   }
   return (
     <div>
