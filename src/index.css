@@ -55,3 +55,7 @@ h3 {
 #tracker-submit {
   margin-left: 20px;
 }
+
+.comment-input {
+  width: 70%;
+}

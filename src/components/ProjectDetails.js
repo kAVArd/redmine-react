@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Suspense } from 'react'
 import { getProject } from '../_service'
 import { formatDateTime } from '../_helper'
+import Comments from './Comments'
 const IssueList = React.lazy(() => import('./IssueList'))
 
 const ProjectDetails = (props) => {
@@ -25,10 +26,16 @@ const ProjectDetails = (props) => {
     <div className='container'>
       <h3><b>{project.name}</b></h3>
       <hr />
-      {console.dir(project)}
-      <h6><b>Created:</b> {formatDateTime(project.created_on)}</h6>
-      <h6><b>Description:</b> {project.description}</h6>
-      <h6><b>Updated:</b> {formatDateTime(project.created_on)}</h6>
+      <div className='row'>
+        <div className='col-4'>
+          <h6><b>Created:</b> {formatDateTime(project.created_on)}</h6>
+          <h6><b>Description:</b> {project.description}</h6>
+          <h6><b>Updated:</b> {formatDateTime(project.created_on)}</h6>
+        </div>
+        <div className='col-8 justify-content-center'>
+          <Comments />
+        </div>
+      </div>
       <hr />
       <Suspense fallback={
         <div className='text-center spinners'>

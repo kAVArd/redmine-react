@@ -3,7 +3,6 @@ import Login from './components/Login'
 import ProjectList from './components/ProjectList'
 import Tracker from './components/Tracker'
 import About from './components/About'
-import Comments from './components/Comments'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import ProjectDetails from './components/ProjectDetails'
 import IssueDetails from './components/IssueDetails'
@@ -31,9 +30,6 @@ function App () {
                   <Link to='/tracker' className='nav-link'>Tracker</Link>
                 </li>
                 <li className='nav-item'>
-                  <Link to='/comments' className='nav-link'>Comments</Link>
-                </li>
-                <li className='nav-item'>
                   <Link to='/about' className='nav-link'>About</Link>
                 </li>
               </ul>
@@ -48,7 +44,6 @@ function App () {
           </nav>
           <Route exact path='/' component={ProjectList} />
           <Route exact path='/tracker' component={Tracker} />
-          <Route exact path='/comments' component={Comments} />
           <Route exact path='/about' component={About} />
           <Route exact path='/projects/:id' component={ProjectDetails} />
           <Route exact path='/issues/:id' component={IssueDetails} />
