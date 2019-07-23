@@ -1,19 +1,20 @@
-import React, { useState } from 'react'
-import { addComment, getProjectComments } from '../_helper'
+import React, { useState, useContext } from 'react'
+import { addComment } from '../_helper'
+import CommentContext from './CommentContext'
 
 const Comments = ({ projectId }) => {
   const [commentText, setCommentText] = useState('')
   const [username, setUsername] = useState('')
-  const [comments, setComments] = useState(getProjectComments(projectId))
+  const comments = useContext(CommentContext)
 
   const handleCreateComment = () => {
-    setComments([
-      ...comments,
+    comments[projectId] = [
+      ...comments[projectId],
       addComment(username, commentText, projectId)
-    ])
+    ]
     setCommentText('')
     setUsername('')
-    console.log(localStorage)
+    console.log(JSON.parse(localStorage.getItem('comments')))
   }
   return (
     <div>
@@ -28,7 +29,7 @@ const Comments = ({ projectId }) => {
       </div>
       <button className='btn btn-secondary' onClick={handleCreateComment}>Create</button>
       <hr />
-      {comments.map((comment, index) => (
+      {comments[projectId].map((comment, index) => (
         <div key={index}>
           <b>{comment.username}</b> <i className='comment-date'>{comment.date}</i>
           <p>{comment.commentText}</p>

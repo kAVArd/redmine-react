@@ -34,7 +34,6 @@ const IssueDetails = (props) => {
 
   return (
     <div className='container'>
-      {console.log(issue)}
       <h3><b>Issue #{issue.id}</b></h3>
       <div className='row'>
         <div className='col-4'>
