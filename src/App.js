@@ -7,19 +7,30 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import ProjectDetails from './components/ProjectDetails'
 import IssueDetails from './components/IssueDetails'
 import CommentContext from './components/CommentContext'
+import { addComment, getComments } from './_helper'
 
 function App () {
   const [isLogin, setIsLogin] = useState(true)
-
+  const [comments, setComments] = useState(getComments())
   const login = (e) => {
     e.preventDefault()
     setIsLogin(!isLogin)
   }
 
+  const setCommentsContext = (username, commentText, projectId) => {
+    setComments({
+      ...comments,
+      [projectId]: [
+        ...comments[projectId],
+        addComment(username, commentText, projectId)
+      ]
+    })
+  }
+
   if (isLogin) {
     return (
       <Router>
-        <CommentContext.Provider value={JSON.parse(localStorage.getItem('comments'))}>
+        <CommentContext.Provider value={[comments, setCommentsContext]}>
           <div className='container'>
             <nav className='navbar navbar-expand-sm bg-dark navbar-dark'>
               <Link to='/' className='navbar-brand'><b>Redmine</b></Link>

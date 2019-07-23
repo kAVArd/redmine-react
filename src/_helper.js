@@ -36,3 +36,7 @@ export const getProjectComments = (projectId) => {
   if (!comments[projectId]) comments[projectId] = []
   return comments[projectId]
 }
+
+export const getComments = () => {
+  return JSON.parse(localStorage.getItem('comments'))
+}
