@@ -59,3 +59,7 @@ h3 {
 .comment-input {
   width: 70%;
 }
+
+.comment-date {
+  margin-left: 10px;
+}

@@ -5,7 +5,6 @@ const Comments = ({ projectId }) => {
   const [commentText, setCommentText] = useState('')
   const [username, setUsername] = useState('')
   const [comments, setComments] = useState(getProjectComments(projectId))
-  console.log(localStorage)
 
   const handleCreateComment = () => {
     setComments([
@@ -31,7 +30,7 @@ const Comments = ({ projectId }) => {
       <hr />
       {comments.map((comment, index) => (
         <div key={index}>
-          <b>{comment.username}</b> {comment.date}
+          <b>{comment.username}</b> <i className='comment-date'>{comment.date}</i>
           <p>{comment.commentText}</p>
         </div>
       ))}

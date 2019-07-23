@@ -1,61 +1,37 @@
 const requestOptions = {
   cradentials: 'include',
+  method: 'get',
   headers: {
     'X-Redmine-API-Key': `${process.env.REACT_APP_TOKKEN}`,
     'Content-Type': 'application/json'
   }
 }
 
-export const getProjects = () => {
-  const options = {
-    ...requestOptions,
-    method: 'get'
-  }
-
-  // eslint-disable-next-line
-  return fetch(`${process.env.REACT_APP_URL}/projects.json`, options)
-    .then(res => res.json())
-    .then(resObj => resObj.projects)
+const processResFetch = (res, entity = '') => {
+  return res.then(res => res.json())
+    .then(resObj => (entity === '' ? resObj : resObj[entity]))
     .catch(e => e)
+}
+
+export const getProjects = () => {
+  // eslint-disable-next-line
+  return processResFetch(fetch(`${process.env.REACT_APP_URL}/projects.json`, requestOptions), 'projects')
 }
 
 export const getProjectIssues = (projectId, offset) => {
-  const options = {
-    ...requestOptions,
-    method: 'get'
-  }
-
-  // eslint-disable-next-line
-  return fetch(`${process.env.REACT_APP_URL}/issues.json?project_id=${projectId}&limit=25&offset=${offset}`, options)
-    .then(res => res.json())
-    .then(resObj => resObj)
-    .catch(e => e)
+  return processResFetch(
+    // eslint-disable-next-line
+    fetch(`${process.env.REACT_APP_URL}/issues.json?project_id=${projectId}&limit=25&offset=${offset}`, requestOptions))
 }
 
 export const getProject = (projectId) => {
-  const options = {
-    ...requestOptions,
-    method: 'get'
-  }
-
   // eslint-disable-next-line
-  return fetch(`${process.env.REACT_APP_URL}/projects/${projectId}.json`, options)
-    .then(res => res.json())
-    .then(resObj => resObj.project)
-    .catch(e => e)
+  return processResFetch(fetch(`${process.env.REACT_APP_URL}/projects/${projectId}.json`, requestOptions), 'project')
 }
 
 export const getIssue = (issueId) => {
-  const options = {
-    ...requestOptions,
-    method: 'get'
-  }
-
   // eslint-disable-next-line
-  return fetch(`${process.env.REACT_APP_URL}/issues/${issueId}.json`, options)
-    .then(res => res.json())
-    .then(resObj => resObj.issue)
-    .catch(e => e)
+  return processResFetch(fetch(`${process.env.REACT_APP_URL}/issues/${issueId}.json`, requestOptions), 'issue')
 }
 
 export const postTracker = (issueId, date, hours, comment, activityId) => {
@@ -74,8 +50,5 @@ export const postTracker = (issueId, date, hours, comment, activityId) => {
   }
 
   // eslint-disable-next-line
-   return fetch(`${process.env.REACT_APP_URL}/time_entries.json`, options)
-    .then(res => res.json())
-    .then(resObj => resObj)
-    .catch(e => e)
+   return processResFetch(fetch(`${process.env.REACT_APP_URL}/time_entries.json`, options))
 }
