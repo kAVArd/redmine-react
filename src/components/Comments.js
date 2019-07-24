@@ -33,12 +33,12 @@ const Comments = ({ projectId }) => {
       </div>
       <button className='btn btn-secondary' onClick={handleCreateComment}>Create</button>
       <hr />
-      {comments[projectId].map((comment, index) => (
+      {comments[projectId] ? comments[projectId].map((comment, index) => (
         <div key={index}>
           <b>{comment.username}</b> <i className='comment-date'>{comment.date}</i>
           <p>{comment.commentText}</p>
         </div>
-      ))}
+      )) : <h4>No comments</h4>}
     </div>
   )
 }
