@@ -34,12 +34,12 @@ const Comments = ({ projectId }) => {
       </div>
       <button className='btn btn-secondary' onClick={handleClickCreate}>Create</button>
       <hr />
-      {comments.map((comment, index) => (
+      {comments ? comments.map((comment, index) => (
         <div key={index}>
           <b>{comment.username}</b> <i className='comment-date'>{comment.date}</i>
           <p>{comment.commentText}</p>
         </div>
-      ))}
+      )) : <h4>No comments</h4>}
     </div>
   )
 }
