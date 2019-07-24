@@ -1,14 +1,21 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { getComments } from '../_helper'
-import CommentContext from './CommentContext'
+import { ADD_COMMENT, useCommentValue } from './CommentContext'
 
 const Comments = ({ projectId }) => {
   const [commentText, setCommentText] = useState('')
   const [username, setUsername] = useState('')
-  const [comments, setCommentsContext] = useContext(CommentContext)
+  const [comments, dispatch] = useCommentValue()
 
   const handleCreateComment = () => {
-    setCommentsContext(username, commentText, projectId)
+    dispatch({
+      type: ADD_COMMENT,
+      data: {
+        username: username,
+        commentText: commentText,
+        projectId: projectId
+      }
+    })
     setCommentText('')
     setUsername('')
     console.log(getComments())
