@@ -6,7 +6,11 @@ import About from './components/About'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import ProjectDetails from './components/ProjectDetails'
 import IssueDetails from './components/IssueDetails'
-import  { CommentContextProvider } from './components/CommentContext'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import comments from './reducers/comments'
+
+const store = createStore(comments)
 
 function App () {
   const [isLogin, setIsLogin] = useState(true)
@@ -18,8 +22,8 @@ function App () {
 
   if (isLogin) {
     return (
-      <Router>
-        <CommentContextProvider>
+      <Provider store={store}>
+        <Router>
           <div className='container'>
             <nav className='navbar navbar-expand-sm bg-dark navbar-dark'>
               <Link to='/' className='navbar-brand'><b>Redmine</b></Link>
@@ -50,8 +54,8 @@ function App () {
             <Route exact path='/projects/:id' component={ProjectDetails} />
             <Route exact path='/issues/:id' component={IssueDetails} />
           </div>
-        </CommentContextProvider>
-      </Router>
+        </Router>
+      </Provider>
     )
   }
 

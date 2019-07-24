@@ -16,6 +16,8 @@ export const formatDate = (d) => {
   return dateParse.getFullYear() + '-' + month + '-' + date
 }
 
+export const ADD_COMMENT = 'ADD_COMMENT'
+
 export const addComment = (username, commentText, projectId) => {
   if (!localStorage.getItem('comments')) localStorage.setItem('comments', JSON.stringify({}))
   const comments = JSON.parse(localStorage.getItem('comments'))

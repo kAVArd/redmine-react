@@ -1,25 +1,17 @@
 import React, { useState } from 'react'
-import { getComments } from '../_helper'
-import { ADD_COMMENT, useCommentValue } from './CommentContext'
+import { connect } from 'react-redux'
+import commentsContainer from '../containers/comments'
 
-const Comments = ({ projectId }) => {
+const Comments = ({ projectId, comments, addComment }) => {
   const [commentText, setCommentText] = useState('')
   const [username, setUsername] = useState('')
-  const [comments, dispatch] = useCommentValue()
 
-  const handleCreateComment = () => {
-    dispatch({
-      type: ADD_COMMENT,
-      data: {
-        username: username,
-        commentText: commentText,
-        projectId: projectId
-      }
-    })
-    setCommentText('')
+  const handleClickCreate = () => {
+    addComment({ username, commentText, projectId })
     setUsername('')
-    console.log(getComments())
+    setCommentText('')
   }
+
   return (
     <div>
       <h4 className='text-center'><b>Comments</b></h4>
@@ -31,7 +23,7 @@ const Comments = ({ projectId }) => {
         <label htmlFor='comment'>Comment:</label>
         <textarea className='form-control comment-input' rows='5' id='comment' value={commentText} onChange={e => setCommentText(e.target.value)} />
       </div>
-      <button className='btn btn-secondary' onClick={handleCreateComment}>Create</button>
+      <button className='btn btn-secondary' onClick={handleClickCreate}>Create</button>
       <hr />
       {comments[projectId].map((comment, index) => (
         <div key={index}>
@@ -43,4 +35,4 @@ const Comments = ({ projectId }) => {
   )
 }
 
-export default Comments
+export default connect(commentsContainer.mapStateToProps, commentsContainer.mapDispatchToProps)(Comments)
