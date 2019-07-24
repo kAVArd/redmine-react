@@ -1,13 +1,22 @@
 import React, { useState } from 'react'
-import { connect } from 'react-redux'
-import commentsContainer from '../containers/comments'
+import { useSelector, useDispatch } from 'react-redux'
+import { ADD_COMMENT } from '../_helper'
 
-const Comments = ({ projectId, comments, addComment }) => {
+const Comments = ({ projectId }) => {
   const [commentText, setCommentText] = useState('')
   const [username, setUsername] = useState('')
+  const comments = useSelector(state => state[projectId])
+  const dispatch = useDispatch()
 
   const handleClickCreate = () => {
-    addComment({ username, commentText, projectId })
+    dispatch({
+      type: ADD_COMMENT,
+      data: {
+        username: username,
+        commentText: commentText,
+        projectId: projectId
+      }
+    })
     setUsername('')
     setCommentText('')
   }
@@ -25,7 +34,7 @@ const Comments = ({ projectId, comments, addComment }) => {
       </div>
       <button className='btn btn-secondary' onClick={handleClickCreate}>Create</button>
       <hr />
-      {comments[projectId].map((comment, index) => (
+      {comments.map((comment, index) => (
         <div key={index}>
           <b>{comment.username}</b> <i className='comment-date'>{comment.date}</i>
           <p>{comment.commentText}</p>
@@ -35,4 +44,4 @@ const Comments = ({ projectId, comments, addComment }) => {
   )
 }
 
-export default connect(commentsContainer.mapStateToProps, commentsContainer.mapDispatchToProps)(Comments)
+export default Comments
